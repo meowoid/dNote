@@ -1,0 +1,45 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    tools:context=".NavigationDrawerFragment">
+
+    <TextView
+        android:id="@+id/tvDiv1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/dark"
+        android:padding="8dp"
+        android:text="@string/categories"
+        android:textColor="@color/background" />
+
+    <ListView
+        android:id="@+id/lvMenu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:dividerHeight="0dp" />
+
+    <TextView
+        android:id="@+id/tvDiv2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/lvMenu"
+        android:background="@color/dark"
+        android:padding="8dp"
+        android:text="@string/tools"
+        android:textColor="@color/background" />
+
+    <ListView
+        android:id="@+id/lvCategory"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/tvDiv2"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/tvDiv1"
+        android:choiceMode="singleChoice"
+        android:dividerHeight="1dp" />
+
+</RelativeLayout>

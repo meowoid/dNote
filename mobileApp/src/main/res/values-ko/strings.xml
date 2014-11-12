@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">dNote</string>
+
+    <string name="categories">카테고리</string>
+    <string name="tools">도구</string>
+
+    <string name="default_category_name">내 메모</string>
+
+    <string name="open_category_list">카테고리 목록 열기</string>
+    <string name="close_category_list">카테고리 목록 닫기</string>
+
+    <string name="category_manager">카테고리 관리</string>
+    <string name="cm_add_hint">새 카테고리&#8230;</string>
+    <string name="cm_create">생성</string>
+    <string name="cm_create_fail">카테고리를 생성하지 못했습니다!</string>
+    <string name="cm_create_fail_reserved">카테고리를 생성하지 못했습니다!\n예약된 카테고리 이름입니다.</string>
+    <string name="cm_create_fail_too_long">카테고리를 생성하지 못했습니다!\n카테고리 이름은 20자 이내가 되어야 합니다.</string>
+    <string name="cm_create_fail_empty">카테고리를 생성하지 못했습니다!\n카테고리 이름이 비어있습니다.</string>
+    <string name="cm_create_fail_already_exists">카테고리를 생성하지 못했습니다!\n카테고리 이름이 이미 존재합니다.</string>
+    <string name="cm_empty">카테고리가 없습니다.\n새 카테고리를 생성해서 메모를 저장하세요!</string>
+    <string name="cm_popup_menu_delete">카테고리 삭제</string>
+    <string name="cm_popup_menu_delete_prompt">정말로 이 카테고리를 삭제하시겠습니까?\n이 카테고리에 저장된 모든 메모는 삭제되며, 복구할 수 없습니다!</string>
+    <string name="cm_popup_menu_delete_prompt_yes">예</string>
+    <string name="cm_popup_menu_delete_prompt_no">아니요</string>
+    <string name="cm_popup_menu_delete_failed">카테고리를 삭제하지 못했습니다!</string>
+    <string name="cm_popup_menu_delete_failed_last_one">카테고리를 삭제하지 못했습니다!\n적어도 하나의 카테고리는 존재해야 합니다.</string>
+    <string name="cm_popup_menu_rename">이름 바꾸기</string>
+    <string name="cm_popup_menu_rename_ok">확인</string>
+    <string name="cm_popup_menu_rename_cancel">취소</string>
+    <string name="cm_popup_menu_rename_fail">카테고리 이름을 바꾸지 못했습니다!</string>
+    <string name="cm_popup_menu_rename_fail_already_exists">카테고리 이름을 바꾸지 못했습니다!\n카테고리 이름이 이미 존재합니다.</string>
+    <string name="cm_popup_menu_rename_fail_same_name">카테고리 이름을 바꾸지 못했습니다!\n새 카테고리 이름은 기존의 카테고리의 이름과 달라야합니다.</string>
+    <string name="cm_popup_menu_rename_fail_empty">카테고리 이름을 바꾸지 못했습니다!\n카테고리 이름이 비어있습니다.</string>
+    <string name="cm_popup_menu_rename_fail_reserved">카테고리 이름을 바꾸지 못했습니다!\n예약된 카테고리 이름입니다.</string>
+    <string name="cm_popup_menu_rename_fail_too_long">카테고리 이름을 바꾸지 못했습니다!\n카테고리 이름은 20자 이내가 되어야 합니다.</string>
+
+    <string name="mv_add_hint">새 메모&#8230;</string>
+    <string name="mv_add">저장</string>
+    <string name="mv_save_fail">메모를 저장하지 못했습니다!</string>
+    <string name="mv_save_fail_empty">메모를 저장하지 못했습니다!\n메모 내용이 비어있습니다.</string>
+    <string name="mv_empty">이 카테고리에는 메모가 없습니다.\n지금 새 메모를 작성하세요!</string>
+    <string name="mv_popup_share">공유</string>
+    <string name="mv_popup_close">닫기</string>
+    <string name="mv_popup_menu_delete">삭제</string>
+    <string name="mv_popup_menu_delete_fail">메모를 삭제하지 못했습니다!</string>
+    <string name="mv_popup_menu_copy">복사</string>
+    <string name="mv_popup_menu_copy_success">메모가 복사되었습니다!</string>
+    <string name="mv_popup_menu_edit">편집</string>
+    <string name="mv_popup_menu_edit_save">저장</string>
+    <string name="mv_popup_menu_edit_close">닫기</string>
+    <string name="mv_popup_menu_edit_fail">메모를 편집하지 못했습니다!</string>
+    <string name="mv_popup_menu_edit_fail_empty">메모를 편집하지 못했습니다!\n메모 내용이 비어있습니다.</string>
+    <string name="mv_popup_menu_edit_fail_title_too_long">메모를 편집하지 못했습니다!\n제목은 20자 이내가 되어야 합니다.</string>
+    <string name="mv_popup_menu_set_title">제목 설정</string>
+    <string name="mv_popup_menu_set_title_save">저장</string>
+    <string name="mv_popup_menu_set_title_close">닫기</string>
+    <string name="mv_popup_menu_set_title_fail">제목을 설정하지 못했습니다!</string>
+    <string name="mv_popup_menu_set_title_fail_too_long">제목을 설정하지 못했습니다!\n제목은 20자 이내가 되어야 합니다.</string>
+    <string name="mv_popup_menu_move_category">카테고리 이동</string>
+    <string name="mv_popup_menu_move_category_success">메모가 %s 카테고리로 이동되었습니다.</string>
+    <string name="mv_popup_menu_move_category_fail">카테고리를 이동하지 못했습니다!</string>
+    <string name="mv_popup_menu_pin">알림 센터에 고정</string>
+    <string name="mv_popup_menu_pin_title">고정된 메모</string>
+    <string name="mv_share_category">카테고리 공유</string>
+    <string name="mv_share_category_nothing_to_share">이 카테고리에는 공유할 메모가 없습니다.</string>
+
+    <string name="save_from">메모 저장</string>
+    <string name="sf_select_category">메모를 저장할 카테고리를 고르세요.</string>
+    <string name="sf_save_success">메모가 저장되었습니다!</string>
+    <string name="sf_wearable">Wear 메모</string>
+    <string name="sf_wearable_fail">메모를 저장하지 못했습니다!</string>
+    <string name="sf_wearable_fail_message">Android Wear에서 작성한 메모를 저장하지 못했습니다.\n수동으로 저장하려면 여기를 터치하세요.</string>
+
+    <string name="settings">설정</string>
+    <string name="st_ctg_general">일반</string>
+    <string name="st_enter_save">엔터키로 저장</string>
+    <string name="st_enter_save_help_on">엔터키를 누르면 메모가 저장되지만 두 줄 이상의 메모는 작성할 수 없습니다.</string>
+    <string name="st_enter_save_help_off">메모를 저장하려면 \'저장\' 버튼을 눌러야 하지만 두 줄 이상의 메모를 작성할 수 있습니다.</string>
+
+    <string name="new_note">새 메모</string>
+    <string name="new_note_category_not_defined">메모를 저장할 카테고리가 지정되지 않았습니다!</string>
+    <string name="new_note_title">메모 제목</string>
+    <string name="new_note_content">메모 내용</string>
+    <string name="new_note_save">저장</string>
+    <string name="new_note_cancel">취소</string>
+    <string name="new_note_cancel_message">작성중인 메모를 삭제하시겠습니까?</string>
+    <string name="new_note_cancel_yes">예</string>
+    <string name="new_note_cancel_no">아니요</string>
+    <string name="new_note_saved">메모가 저장되었습니다.</string>
+    <string name="new_note_edited">메모가 수정되었습니다.</string>
+
+</resources>

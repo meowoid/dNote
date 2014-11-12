@@ -1,0 +1,14 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory android:title="@string/st_ctg_general" >
+
+        <CheckBoxPreference
+            android:key="st_enter_save"
+            android:title="@string/st_enter_save"
+            android:summaryOn="@string/st_enter_save_help_on"
+            android:summaryOff="@string/st_enter_save_help_off"
+            android:defaultValue="false" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>
