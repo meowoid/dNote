@@ -38,6 +38,8 @@ public class DMMemoView extends Fragment {
     private Button btAddMemo;
     private SharedPreferences sharedPreferences;
 
+    private boolean isEnterSaveEnabled;
+
     @SuppressWarnings("deprecation")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -46,7 +48,7 @@ public class DMMemoView extends Fragment {
         mCategoryName = DMMain.mTitle.toString();
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        boolean isEnterSaveEnabled = sharedPreferences.getBoolean("st_enter_save", false);
+        isEnterSaveEnabled = sharedPreferences.getBoolean("st_enter_save", false);
 
         etMemoContent = (EditText) rootView.findViewById(R.id.etMemoContent);
 
@@ -57,51 +59,49 @@ public class DMMemoView extends Fragment {
             }
         });
 
-        if (isEnterSaveEnabled) {
-            etMemoContent.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-                @Override
-                public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
-                    if (i == EditorInfo.IME_ACTION_DONE) {
-                        switch (DMMemoTools.saveMemo(getActivity(), mCategoryName, etMemoContent.getText().toString())) {
-                            case 0:
-                                etMemoContent.setText(null);
-                                reloadMemo();
-                                break;
-                            case 1:
-                                Toast.makeText(getActivity(), R.string.mv_save_fail, Toast.LENGTH_LONG).show();
-                                break;
-                            case 2:
-                                Toast.makeText(getActivity(), R.string.mv_save_fail_empty, Toast.LENGTH_LONG).show();
-                                break;
-                        }
-                        return true;
+        etMemoContent.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+                if (i == EditorInfo.IME_ACTION_DONE && isEnterSaveEnabled) {
+                    switch (DMMemoTools.saveMemo(getActivity(), mCategoryName, etMemoContent.getText().toString())) {
+                        case 0:
+                            etMemoContent.setText(null);
+                            reloadMemo();
+                            break;
+                        case 1:
+                            Toast.makeText(getActivity(), R.string.mv_save_fail, Toast.LENGTH_LONG).show();
+                            break;
+                        case 2:
+                            Toast.makeText(getActivity(), R.string.mv_save_fail_empty, Toast.LENGTH_LONG).show();
+                            break;
                     }
-                    return false;
+                    return true;
                 }
-            });
+                return false;
+            }
+        });
 
-            etMemoContent.setOnKeyListener(new View.OnKeyListener() {
-                public boolean onKey(View v, int keyCode, KeyEvent event) {
-                    if (event.getAction() == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
+        etMemoContent.setOnKeyListener(new View.OnKeyListener() {
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if ((event.getAction() == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) && isEnterSaveEnabled) {
 
-                        switch (DMMemoTools.saveMemo(getActivity(), mCategoryName, etMemoContent.getText().toString())) {
-                            case 0:
-                                etMemoContent.setText(null);
-                                reloadMemo();
-                                break;
-                            case 1:
-                                Toast.makeText(getActivity(), R.string.mv_save_fail, Toast.LENGTH_LONG).show();
-                                break;
-                            case 2:
-                                Toast.makeText(getActivity(), R.string.mv_save_fail_empty, Toast.LENGTH_LONG).show();
-                                break;
-                        }
-                        return true;
+                    switch (DMMemoTools.saveMemo(getActivity(), mCategoryName, etMemoContent.getText().toString())) {
+                        case 0:
+                            etMemoContent.setText(null);
+                            reloadMemo();
+                            break;
+                        case 1:
+                            Toast.makeText(getActivity(), R.string.mv_save_fail, Toast.LENGTH_LONG).show();
+                            break;
+                        case 2:
+                            Toast.makeText(getActivity(), R.string.mv_save_fail_empty, Toast.LENGTH_LONG).show();
+                            break;
                     }
-                    return false;
+                    return true;
                 }
-            });
-        }
+                return false;
+            }
+        });
 
         btAddMemo = (Button) rootView.findViewById(R.id.btAddMemo);
         btAddMemo.setOnClickListener(new View.OnClickListener() {
@@ -146,7 +146,8 @@ public class DMMemoView extends Fragment {
                 });
                 adbMemoPopup.setNegativeButton(R.string.mv_popup_close, new DialogInterface.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {}
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                    }
                 });
                 adbMemoPopup.show();
             }
@@ -221,7 +222,8 @@ public class DMMemoView extends Fragment {
                                             });
                                             adbAddTitle.setNegativeButton(R.string.mv_popup_menu_edit_close, new DialogInterface.OnClickListener() {
                                                 @Override
-                                                public void onClick(DialogInterface dialogInterface, int i) {}
+                                                public void onClick(DialogInterface dialogInterface, int i) {
+                                                }
                                             });
                                             adbAddTitle.show();
                                         } else {
@@ -245,7 +247,7 @@ public class DMMemoView extends Fragment {
                                             @Override
                                             public void onClick(DialogInterface dialogInterface, int i) {
                                                 String mMemoTitle = etMemoTitle.getText().toString();
-                                                switch(DMMemoTools.setMemoTitle(getActivity(), mCategoryName, memoId, mMemoTitle)) {
+                                                switch (DMMemoTools.setMemoTitle(getActivity(), mCategoryName, memoId, mMemoTitle)) {
                                                     case 0:
                                                         reloadMemo();
                                                         break;
@@ -260,7 +262,8 @@ public class DMMemoView extends Fragment {
                                         });
                                         adbAddTitle.setNegativeButton(R.string.mv_popup_menu_set_title_close, new DialogInterface.OnClickListener() {
                                             @Override
-                                            public void onClick(DialogInterface dialogInterface, int i) {}
+                                            public void onClick(DialogInterface dialogInterface, int i) {
+                                            }
                                         });
                                         adbAddTitle.show();
                                     }
@@ -338,7 +341,7 @@ public class DMMemoView extends Fragment {
     public void onResume() {
         super.onResume();
         reloadMemo();
-        boolean isEnterSaveEnabled = sharedPreferences.getBoolean("st_enter_save", false);
+        isEnterSaveEnabled = sharedPreferences.getBoolean("st_enter_save", false);
         if (isEnterSaveEnabled) {
             etMemoContent.setSingleLine();
             etMemoContent.setImeOptions(EditorInfo.IME_ACTION_DONE);
