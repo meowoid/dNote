@@ -9,7 +9,7 @@ android {
         minSdkVersion 9
         targetSdkVersion 21
         versionCode 1411
-        versionName "14.11 NK19aMR"
+        versionName "14.11 NK19bMR"
     }
 
     buildTypes {

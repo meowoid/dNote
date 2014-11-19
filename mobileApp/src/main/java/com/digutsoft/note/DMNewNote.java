@@ -108,6 +108,9 @@ public class DMNewNote extends ActionBarActivity {
                         case 2:
                             Toast.makeText(DMNewNote.this, R.string.mv_save_fail_empty, Toast.LENGTH_LONG).show();
                             break;
+                        case 3:
+                            Toast.makeText(DMNewNote.this, R.string.new_note_save_fail_title_too_long, Toast.LENGTH_LONG).show();
+                            break;
                     }
                 }
                 return true;

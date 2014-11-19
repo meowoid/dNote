@@ -89,6 +89,7 @@
     <string name="new_note_cancel_yes">Yes</string>
     <string name="new_note_cancel_no">No</string>
     <string name="new_note_saved">Note has successfully saved.</string>
+    <string name="new_note_save_fail_title_too_long">Failed to save note!\nTitle should be under 20 letters.</string>
     <string name="new_note_edited">Note has successfully edited.</string>
 
 </resources>

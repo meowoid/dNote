@@ -89,6 +89,7 @@
     <string name="new_note_cancel_yes">예</string>
     <string name="new_note_cancel_no">아니요</string>
     <string name="new_note_saved">메모가 저장되었습니다.</string>
+    <string name="new_note_save_fail_title_too_long">메모를 저장하지 못했습니다!\n제목은 20자 이내가 되어야 합니다.</string>
     <string name="new_note_edited">메모가 수정되었습니다.</string>
 
 </resources>
