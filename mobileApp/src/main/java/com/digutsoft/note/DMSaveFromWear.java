@@ -17,11 +17,24 @@ public class DMSaveFromWear extends WearableListenerService {
     @Override
     public void onMessageReceived(MessageEvent messageEvent) {
         if (messageEvent.getPath().equals(dNoteSaveNote)) {
-            DMMemoTools.createCategory(getApplicationContext(), getString(R.string.sf_wearable));
-            switch (DMMemoTools.saveMemo(getApplicationContext(), getString(R.string.sf_wearable), new String(messageEvent.getData()))) {
+            String wearNoteContent = new String(messageEvent.getData());
+            String wearNoteCategory = getString(R.string.sf_wearable);
+            String[] wearNoteContent2 = wearNoteContent.toLowerCase().split(" in category ");
+            if (wearNoteContent2.length >= 2) {
+                StringBuilder sbWearNoteContent = new StringBuilder();
+                for (int i = 0; i < wearNoteContent2.length - 1; i++) {
+                    sbWearNoteContent.append(wearNoteContent2[i]);
+                }
+                wearNoteContent = sbWearNoteContent.toString();
+                wearNoteCategory = wearNoteContent2[wearNoteContent2.length - 1].trim();
+            }
+
+            DMMemoTools.createCategory(getApplicationContext(), wearNoteCategory);
+            switch (DMMemoTools.saveMemo(getApplicationContext(), wearNoteCategory, wearNoteContent)) {
                 case 0:
                     Intent intStartView = new Intent(getApplicationContext(), DMMain.class);
-                    intStartView.putExtra("mvCategoryName", getString(R.string.sf_wearable));
+                    intStartView.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intStartView.putExtra("mvCategoryName", wearNoteCategory);
                     startActivity(intStartView);
                     break;
                 default:

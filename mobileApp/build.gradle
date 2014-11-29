@@ -8,8 +8,8 @@ android {
         applicationId "com.digutsoft.note"
         minSdkVersion 9
         targetSdkVersion 21
-        versionCode 1411
-        versionName "14.11 NK19bMR"
+        versionCode 14111
+        versionName "14.11.1 NK29aMD"
     }
 
     buildTypes {
