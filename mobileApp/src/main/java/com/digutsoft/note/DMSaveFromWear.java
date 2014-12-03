@@ -19,7 +19,17 @@ public class DMSaveFromWear extends WearableListenerService {
         if (messageEvent.getPath().equals(dNoteSaveNote)) {
             String wearNoteContent = new String(messageEvent.getData());
             String wearNoteCategory = getString(R.string.sf_wearable);
-            
+
+            String[] wearNoteContent2 = wearNoteContent.toLowerCase().split(" in category ");
+            if (wearNoteContent2.length >= 2) {
+                StringBuilder sbWearNoteContent = new StringBuilder();
+                for (int i = 0; i < wearNoteContent2.length - 1; i++) {
+                    sbWearNoteContent.append(wearNoteContent2[i]);
+                }
+                wearNoteContent = sbWearNoteContent.toString();
+                wearNoteCategory = wearNoteContent2[wearNoteContent2.length - 1].trim();
+            }
+
             DMMemoTools.createCategory(getApplicationContext(), wearNoteCategory);
             switch (DMMemoTools.saveMemo(getApplicationContext(), wearNoteCategory, wearNoteContent)) {
                 case 0:
