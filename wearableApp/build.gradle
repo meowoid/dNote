@@ -7,15 +7,15 @@ android {
     defaultConfig {
         applicationId "com.digutsoft.note"
         minSdkVersion 20
-        targetSdkVersion 21
-        versionCode 1411
-        versionName "14.11 NK19aWR"
+        targetSdkVersion 20
+        versionCode 14112
+        versionName "14.11.2 NL03aWD"
     }
 
     buildTypes {
         release {
-            runProguard false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+//            runProguard false
+//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
 }
