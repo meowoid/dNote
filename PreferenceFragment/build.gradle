@@ -5,7 +5,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.14.4'
+        classpath "com.android.tools.build:gradle:1.0.0"
     }
 }
 
@@ -16,16 +16,16 @@ version = VERSION
 group = GROUP
 
 dependencies {
-    compile 'com.android.support:support-v4:21.0.0'
+    compile "com.android.support:support-v4:21.0.3"
 }
 
 android {
-    compileSdkVersion 19
-    buildToolsVersion '21.0.2'
+    compileSdkVersion 21
+    buildToolsVersion "21.1.1"
 
     defaultConfig {
         minSdkVersion 7
-        targetSdkVersion 19
+        targetSdkVersion 21
     }
 
     sourceSets {

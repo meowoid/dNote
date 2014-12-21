@@ -1,30 +1,28 @@
-apply plugin: 'com.android.application'
+apply plugin: "com.android.application"
 
 android {
     compileSdkVersion 21
-    buildToolsVersion "21.1.0"
+    buildToolsVersion "21.1.1"
 
     defaultConfig {
         applicationId "com.digutsoft.note"
         minSdkVersion 9
         targetSdkVersion 21
         versionCode 14112
-        versionName "14.11.2 NL03aMD"
+        versionName "14.11.2 NL21aMD"
     }
 
     buildTypes {
         release {
-//            runProguard false
-//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
 }
 
 dependencies {
-    wearApp project(':wearableApp')
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile project(':PreferenceFragment')
-    compile 'com.android.support:appcompat-v7:21.0.0'
-    compile 'com.android.support:support-v4:21.0.0'
-    compile 'com.google.android.gms:play-services-wearable:6.1.11'
+    wearApp project(":wearableApp")
+    compile fileTree(dir: "libs", include: ["*.jar"])
+    compile project(":PreferenceFragment")
+    compile "com.android.support:appcompat-v7:21.0.3"
+    compile "com.android.support:support-v4:21.0.3"
+    compile "com.google.android.gms:play-services-wearable:6.1.11"
 }
