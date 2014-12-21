@@ -1,8 +1,9 @@
-package com.digutsoft.note;
+package com.digutsoft.note.classes;
 
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -12,7 +13,7 @@ public class DMMemoTools {
     }
 
     public static ArrayList<String> getCategoryList(Context mContext) {
-        ArrayList<String> categoryList = new ArrayList<String>();
+        ArrayList<String> categoryList = new ArrayList<>();
 
         DMDatabaseHelper databaseHelper = new DMDatabaseHelper(mContext);
         SQLiteDatabase database = databaseHelper.getReadableDatabase();
@@ -59,7 +60,7 @@ public class DMMemoTools {
                 }
             }
 
-            database.execSQL(String.format("CREATE TABLE \"%s\" (memoId INTEGER PRIMARY KEY, memoTitle TEXT, memoContent TEXT);",
+            database.execSQL(String.format("CREATE TABLE \"%s\" (memoId INTEGER PRIMARY KEY, memoTitle TEXT, memoContent TEXT, checkStatus INTEGER);",
                     addSlashes(mCategoryName)));
             database.execSQL(String.format("INSERT INTO \"__CategoryList\" (cateName) VALUES (\"%s\");",
                     addSlashes(mCategoryName)));
@@ -118,7 +119,7 @@ public class DMMemoTools {
         return 0;
     }
 
-    public static int deleteCategory(final Context mContext, final String mCategoryName) {
+    public static int deleteCategory(Context mContext, String mCategoryName) {
         /**
          * deleteCategory returns:
          * 0: successfully deleted category
@@ -142,9 +143,8 @@ public class DMMemoTools {
         return 0;
     }
 
-    public static ArrayList<String> getMemoList(Context mContext, String mCategoryName, boolean getTitle) {
-        ArrayList<String> memoTitle = new ArrayList<String>();
-        ArrayList<String> memoContent = new ArrayList<String>();
+    public static ArrayList<DMMemoList> getMemoList(Context mContext, String mCategoryName) {
+        ArrayList<DMMemoList> memoList = new ArrayList<>();
 
         DMDatabaseHelper databaseHelper = new DMDatabaseHelper(mContext);
         SQLiteDatabase database = databaseHelper.getReadableDatabase();
@@ -152,42 +152,25 @@ public class DMMemoTools {
                 addSlashes(mCategoryName)), null);
 
         while (cursor.moveToNext()) {
+            String memoTitle, memoContent;
             if (cursor.getString(1).isEmpty()) {
                 String tmpTitle = cursor.getString(2);
                 tmpTitle = tmpTitle.replaceAll("\n", " ");
-                if (tmpTitle.length() > 20) memoTitle.add(tmpTitle.substring(0, 20) + "...");
-                else memoTitle.add(tmpTitle);
+                if (tmpTitle.length() > 20) memoTitle = tmpTitle.substring(0, 20) + "...";
+                else memoTitle = tmpTitle;
             } else {
-                memoTitle.add(cursor.getString(1));
+                memoTitle = cursor.getString(1);
             }
-            memoContent.add(cursor.getString(2));
+            memoContent = cursor.getString(2);
+
+            memoList.add(new DMMemoList(cursor.getInt(0), memoTitle, memoContent, cursor.getInt(3) != 0));
         }
 
         cursor.close();
         database.close();
         databaseHelper.close();
 
-        if (getTitle) return memoTitle;
-        else return memoContent;
-    }
-
-    public static ArrayList<Integer> getMemoIndex(Context mContext, String mCategoryName) {
-        ArrayList<Integer> memoIndex = new ArrayList<Integer>();
-
-        DMDatabaseHelper databaseHelper = new DMDatabaseHelper(mContext);
-        SQLiteDatabase database = databaseHelper.getReadableDatabase();
-        Cursor cursor = database.rawQuery(String.format("SELECT memoId FROM \"%s\";",
-                addSlashes(mCategoryName)), null);
-
-        while (cursor.moveToNext()) {
-            memoIndex.add(cursor.getInt(0));
-        }
-
-        cursor.close();
-        database.close();
-        databaseHelper.close();
-
-        return memoIndex;
+        return memoList;
     }
 
     public static String getMemo(Context mContext, String mCategoryName, int mMemoId, boolean getTitle) {
@@ -361,5 +344,26 @@ public class DMMemoTools {
             return 1;
         }
         return 0;
+    }
+
+    public static boolean checkMemo(Context mContext, String mCategoryName, int mMemoId, boolean checkStatus) {
+        /**
+         * checkMemo returns:
+         * true: successfully checked/un-checked memo
+         * false: failed to check/un-check memo
+         */
+        try {
+            DMDatabaseHelper databaseHelper = new DMDatabaseHelper(mContext);
+            SQLiteDatabase database = databaseHelper.getReadableDatabase();
+            database.execSQL(String.format("UPDATE \"%s\" SET checkStatus = %d WHERE memoId = %d;",
+                    addSlashes(mCategoryName), (checkStatus ? 1 : 0), mMemoId));
+            Log.d("DMMemoTools", String.format("UPDATE \"%s\" SET checkStatus = %d WHERE memoId = %d;",
+                    addSlashes(mCategoryName), (checkStatus ? 1 : 0), mMemoId));
+            database.close();
+            databaseHelper.close();
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
     }
 }

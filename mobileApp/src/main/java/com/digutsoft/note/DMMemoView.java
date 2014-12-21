@@ -30,13 +30,20 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.digutsoft.note.classes.DMMemoList;
+import com.digutsoft.note.classes.DMMemoTools;
+
+import java.util.ArrayList;
+
 public class DMMemoView extends Fragment {
 
-    private String mCategoryName;
     private ListView lvMemoList;
     private EditText etMemoContent;
     private Button btAddMemo;
     private SharedPreferences sharedPreferences;
+
+    public static ArrayList<DMMemoList> alMemoList;
+    public static String mCategoryName;
 
     private boolean isEnterSaveEnabled;
 
@@ -128,19 +135,22 @@ public class DMMemoView extends Fragment {
         lvMemoList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                final int memoId = DMMemoTools.getMemoIndex(getActivity(), mCategoryName).get(i);
-                String mMemoTitle = DMMemoTools.getMemo(getActivity(), mCategoryName, memoId, true);
-                final String mMemoContent = DMMemoTools.getMemo(getActivity(), mCategoryName, memoId, false);
+                String memoTitle = alMemoList.get(i).mMemoTitle;
+                final String memoContent = alMemoList.get(i).mMemoContent;
 
                 AlertDialog.Builder adbMemoPopup = new AlertDialog.Builder(getActivity());
-                adbMemoPopup.setTitle(mMemoTitle);
-                adbMemoPopup.setMessage(mMemoContent);
+                if (memoContent.startsWith(memoTitle)) {
+                    adbMemoPopup.setTitle(R.string.mv_view_note);
+                } else {
+                    adbMemoPopup.setTitle(memoTitle);
+                }
+                adbMemoPopup.setMessage(memoContent);
                 adbMemoPopup.setPositiveButton(R.string.mv_popup_share, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         Intent intShare = new Intent(android.content.Intent.ACTION_SEND);
                         intShare.setType("text/plain");
-                        intShare.putExtra(android.content.Intent.EXTRA_TEXT, mMemoContent);
+                        intShare.putExtra(android.content.Intent.EXTRA_TEXT, memoContent);
                         startActivity(Intent.createChooser(intShare, getResources().getString(R.string.mv_popup_share)));
                     }
                 });
@@ -156,16 +166,17 @@ public class DMMemoView extends Fragment {
         lvMemoList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-                final int memoId = DMMemoTools.getMemoIndex(getActivity(), mCategoryName).get(i);
+                final int memoId = alMemoList.get(i).mId;
 
                 AlertDialog.Builder adbMemoPopupMenu = new AlertDialog.Builder(getActivity());
                 adbMemoPopupMenu.setTitle(DMMemoTools.getMemo(getActivity(), mCategoryName, memoId, true));
-                adbMemoPopupMenu.setItems(new String[]{getResources().getString(R.string.mv_popup_menu_delete),
-                                getResources().getString(R.string.mv_popup_menu_copy),
-                                getResources().getString(R.string.mv_popup_menu_edit),
-                                getResources().getString(R.string.mv_popup_menu_set_title),
-                                getResources().getString(R.string.mv_popup_menu_move_category),
-                                getResources().getString(R.string.mv_popup_menu_pin)},
+                adbMemoPopupMenu.setItems(new String[]{
+                                getString(R.string.mv_popup_menu_delete),
+                                getString(R.string.mv_popup_menu_copy),
+                                getString(R.string.mv_popup_menu_edit),
+                                getString(R.string.mv_popup_menu_set_title),
+                                getString(R.string.mv_popup_menu_move_category),
+                                getString(R.string.mv_popup_menu_pin)},
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
@@ -269,7 +280,7 @@ public class DMMemoView extends Fragment {
                                     }
                                     break;
                                     case 4: {   //Move category
-                                        final ArrayAdapter<String> aaCategoryList = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, DMMemoTools.getCategoryList(getActivity()));
+                                        final ArrayAdapter<String> aaCategoryList = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, DMMemoTools.getCategoryList(getActivity()));
                                         AlertDialog.Builder adbCategoryList = new AlertDialog.Builder(getActivity());
                                         adbCategoryList.setTitle(R.string.mv_popup_menu_move_category);
                                         adbCategoryList.setAdapter(aaCategoryList, new DialogInterface.OnClickListener() {
@@ -356,14 +367,18 @@ public class DMMemoView extends Fragment {
     private void reloadMemo() {
         super.onResume();
         try {
-            ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getActivity(),
-                    android.R.layout.simple_list_item_1,
-                    DMMemoTools.getMemoList(getActivity(), mCategoryName, true));
-            lvMemoList.setAdapter(arrayAdapter);
+            alMemoList = DMMemoTools.getMemoList(getActivity(), mCategoryName);
+            DMMemoList.DMMemoListAdapter alMemoListAdapter = new DMMemoList.DMMemoListAdapter(getActivity().getApplicationContext(), alMemoList);
+            lvMemoList.setAdapter(alMemoListAdapter);
+            alMemoListAdapter.notifyDataSetChanged();
         } catch (SQLiteException e) {
             mCategoryName = DMMemoTools.getCategoryList(getActivity()).get(0);
             DMMain.mTitle = mCategoryName;
             reloadMemo();
         }
+    }
+
+    public static int getMemoId(int i) {
+        return alMemoList.get(i).mId;
     }
 }

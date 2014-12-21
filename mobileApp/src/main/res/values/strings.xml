@@ -36,6 +36,7 @@
     <string name="cm_popup_menu_rename_fail_reserved">Failed to rename category!\nCategory name is reserved by dNote.</string>
     <string name="cm_popup_menu_rename_fail_too_long">Failed to rename category!\nCategory name should be under 20 letters.</string>
 
+    <string name="mv_view_note">Note</string>
     <string name="mv_add_hint">New note…</string>
     <string name="mv_add">Add</string>
     <string name="mv_save_fail">Failed to save note!</string>

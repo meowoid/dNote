@@ -24,6 +24,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 
+import com.digutsoft.note.classes.DMMemoTools;
+
 import java.util.ArrayList;
 
 /**

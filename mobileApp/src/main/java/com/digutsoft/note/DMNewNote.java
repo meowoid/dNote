@@ -9,6 +9,8 @@ import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.digutsoft.note.classes.DMMemoTools;
+
 
 public class DMNewNote extends ActionBarActivity {
 

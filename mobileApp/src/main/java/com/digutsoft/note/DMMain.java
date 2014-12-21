@@ -10,12 +10,16 @@ import android.view.MenuItem;
 import android.support.v4.widget.DrawerLayout;
 import android.widget.Toast;
 
+import com.digutsoft.note.classes.DMMemoList;
+import com.digutsoft.note.classes.DMMemoTools;
+
 import java.util.ArrayList;
 
 public class DMMain extends ActionBarActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 
     private NavigationDrawerFragment mNavigationDrawerFragment;
     private DrawerLayout mDrawerLayout;
+    private boolean isSmallScreen = false;
     public static CharSequence mTitle;
 
     @Override
@@ -26,8 +30,11 @@ public class DMMain extends ActionBarActivity implements NavigationDrawerFragmen
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 
-        mNavigationDrawerFragment = (NavigationDrawerFragment) getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
-        mNavigationDrawerFragment.setUp(R.id.navigation_drawer, mDrawerLayout);
+        if (mDrawerLayout != null) {
+            isSmallScreen = true;
+            mNavigationDrawerFragment = (NavigationDrawerFragment) getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
+            mNavigationDrawerFragment.setUp(R.id.navigation_drawer, mDrawerLayout);
+        }
 
         try {
             if (getIntent().hasExtra("mvCategoryName")) {
@@ -35,7 +42,8 @@ public class DMMain extends ActionBarActivity implements NavigationDrawerFragmen
             } else {
                 mTitle = DMMemoTools.getCategoryList(this).get(0);
             }
-        } catch (IndexOutOfBoundsException ignored) {}
+        } catch (IndexOutOfBoundsException ignored) {
+        }
     }
 
     @Override
@@ -49,6 +57,7 @@ public class DMMain extends ActionBarActivity implements NavigationDrawerFragmen
 
     public void onSectionAttached(int number) {
         mTitle = DMMemoTools.getCategoryList(this).get(number);
+        getSupportActionBar().setTitle(mTitle);
     }
 
     public void restoreActionBar() {
@@ -59,10 +68,14 @@ public class DMMain extends ActionBarActivity implements NavigationDrawerFragmen
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        if (!mNavigationDrawerFragment.isDrawerOpen()) {
+        if(isSmallScreen) {
+            if (!mNavigationDrawerFragment.isDrawerOpen()) {
+                getMenuInflater().inflate(R.menu.memoview, menu);
+                restoreActionBar();
+                return true;
+            }
+        } else {
             getMenuInflater().inflate(R.menu.memoview, menu);
-            restoreActionBar();
-            return true;
         }
         return super.onCreateOptionsMenu(menu);
     }
@@ -77,7 +90,7 @@ public class DMMain extends ActionBarActivity implements NavigationDrawerFragmen
                 startActivity(intNewNote);
                 return true;
             case R.id.action_share_category:
-                ArrayList<String> alMemoList = DMMemoTools.getMemoList(DMMain.this, mTitle.toString(), false);
+                ArrayList<DMMemoList> alMemoList = DMMemoTools.getMemoList(DMMain.this, mTitle.toString());
                 StringBuilder sbMemoList = new StringBuilder();
                 if (alMemoList.size() == 0) {
                     Toast.makeText(DMMain.this, R.string.mv_share_category_nothing_to_share, Toast.LENGTH_LONG).show();
@@ -86,7 +99,7 @@ public class DMMain extends ActionBarActivity implements NavigationDrawerFragmen
                 sbMemoList.append(mTitle);
                 sbMemoList.append(": ");
                 for (int i = 0; i < alMemoList.size(); i++) {
-                    sbMemoList.append(alMemoList.get(i));
+                    sbMemoList.append(alMemoList.get(i).mMemoContent);
                     if (i != alMemoList.size() - 1) sbMemoList.append(", ");
                 }
                 Intent intShare = new Intent(android.content.Intent.ACTION_SEND);
@@ -100,7 +113,7 @@ public class DMMain extends ActionBarActivity implements NavigationDrawerFragmen
     }
 
     public void onBackPressed() {
-        if (mNavigationDrawerFragment.isDrawerOpen())
+        if(isSmallScreen && mNavigationDrawerFragment.isDrawerOpen())
             mDrawerLayout.closeDrawers();
         else
             finish();
