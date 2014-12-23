@@ -11,9 +11,13 @@
 
         <item name="android:colorPrimaryDark">@color/dark</item>
 
+        <item name="android:colorAccent">@color/dark</item>
+
         <item name="colorPrimary">@color/primary</item>
 
         <item name="colorPrimaryDark">@color/dark</item>
+        
+        <item name="colorAccent">@color/dark</item>
 
     </style>
 

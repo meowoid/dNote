@@ -9,7 +9,7 @@ android {
         minSdkVersion 9
         targetSdkVersion 21
         versionCode 14112
-        versionName "14.11.2 NL23aMC"
+        versionName "14.11.2 NL23cMC3"
     }
 
     buildTypes {
