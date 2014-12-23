@@ -1,0 +1,11 @@
+.gradle
+/local.properties
+/.idea/workspace.xml
+.DS_Store
+/build
+.idea/
+mobileApp/build/
+mobileApp/manifest-merger-release-report.txt
+mobileApp/mobileApp-release.apk
+mobileApp/wearableApp-release.apk
+wearableApp/build/

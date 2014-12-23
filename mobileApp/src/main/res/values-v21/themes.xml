@@ -3,6 +3,10 @@
 
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
 
+        <item name="android:windowBackground">@color/background</item>
+
+        <item name="android:colorBackground">@color/background</item>
+
         <item name="android:colorPrimary">@color/primary</item>
 
         <item name="android:colorPrimaryDark">@color/dark</item>
@@ -10,8 +14,6 @@
         <item name="colorPrimary">@color/primary</item>
 
         <item name="colorPrimaryDark">@color/dark</item>
-
-        <item name="android:windowBackground">@color/background</item>
 
     </style>
 
