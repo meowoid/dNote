@@ -3,13 +3,28 @@ package com.digutsoft.note.classes;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
 import java.util.ArrayList;
 
 public class DMMemoTools {
     public static String addSlashes(String mString) {
         return mString.replace("\"", "\"\"");
+    }
+
+    private static int arabicToDecimal(int number) {
+        //Original code from http://stackoverflow.com/a/5316164
+        final String arabic = "\u06f0\u06f1\u06f2\u06f3\u06f4\u06f5\u06f6\u06f7\u06f8\u06f9";
+        final String arabicNumber = Integer.toString(number);
+
+        char[] chars = new char[arabicNumber.length()];
+        for (int i = 0; i < arabicNumber.length(); i++) {
+            char ch = arabicNumber.charAt(i);
+            int index = arabic.indexOf(ch);
+            if (index >= 0) ch = (char) (index + '0');
+            chars[i] = ch;
+        }
+
+        return Integer.parseInt(new String(chars));
     }
 
     public static ArrayList<String> getCategoryList(Context mContext) {
@@ -180,7 +195,7 @@ public class DMMemoTools {
         DMDatabaseHelper databaseHelper = new DMDatabaseHelper(mContext);
         SQLiteDatabase database = databaseHelper.getReadableDatabase();
         Cursor cursor = database.rawQuery(String.format("SELECT * FROM \"%s\" WHERE memoId = %d;",
-                addSlashes(mCategoryName), mMemoId), null);
+                addSlashes(mCategoryName), arabicToDecimal(mMemoId)), null);
 
         while (cursor.moveToNext()) {
             if (cursor.getString(1).isEmpty()) {
@@ -264,7 +279,7 @@ public class DMMemoTools {
             DMDatabaseHelper databaseHelper = new DMDatabaseHelper(mContext);
             SQLiteDatabase database = databaseHelper.getReadableDatabase();
             database.execSQL(String.format("UPDATE \"%s\" SET memoTitle = \"%s\" WHERE memoId = %d;",
-                    addSlashes(mCategoryName), addSlashes(mMemoTitle), mMemoId));
+                    addSlashes(mCategoryName), addSlashes(mMemoTitle), arabicToDecimal(mMemoId)));
             database.close();
             databaseHelper.close();
         } catch (Exception e) {
@@ -287,7 +302,7 @@ public class DMMemoTools {
             DMDatabaseHelper databaseHelper = new DMDatabaseHelper(mContext);
             SQLiteDatabase database = databaseHelper.getReadableDatabase();
             database.execSQL(String.format("UPDATE \"%s\" SET memoContent = \"%s\" WHERE memoId = %d;",
-                    addSlashes(mCategoryName), addSlashes(mNewMemoContent), mMemoId));
+                    addSlashes(mCategoryName), addSlashes(mNewMemoContent), arabicToDecimal(mMemoId)));
             database.close();
             databaseHelper.close();
         } catch (Exception e) {
@@ -313,7 +328,7 @@ public class DMMemoTools {
             DMDatabaseHelper databaseHelper = new DMDatabaseHelper(mContext);
             SQLiteDatabase database = databaseHelper.getReadableDatabase();
             database.execSQL(String.format("UPDATE \"%s\" SET memoTitle = \"%s\", memoContent = \"%s\" WHERE memoId = %d;",
-                    addSlashes(mCategoryName), addSlashes(mNewMemoTitle), addSlashes(mNewMemoContent), mMemoId));
+                    addSlashes(mCategoryName), addSlashes(mNewMemoTitle), addSlashes(mNewMemoContent), arabicToDecimal(mMemoId)));
             database.close();
             databaseHelper.close();
         } catch (Exception e) {
@@ -337,7 +352,7 @@ public class DMMemoTools {
             DMDatabaseHelper databaseHelper = new DMDatabaseHelper(mContext);
             SQLiteDatabase database = databaseHelper.getReadableDatabase();
             database.execSQL(String.format("DELETE FROM \"%s\" WHERE memoId = %d;",
-                    addSlashes(mCategoryName), mMemoId));
+                    addSlashes(mCategoryName), arabicToDecimal(mMemoId)));
             database.close();
             databaseHelper.close();
         } catch (Exception e) {
@@ -356,9 +371,7 @@ public class DMMemoTools {
             DMDatabaseHelper databaseHelper = new DMDatabaseHelper(mContext);
             SQLiteDatabase database = databaseHelper.getReadableDatabase();
             database.execSQL(String.format("UPDATE \"%s\" SET checkStatus = %d WHERE memoId = %d;",
-                    addSlashes(mCategoryName), (checkStatus ? 1 : 0), mMemoId));
-            Log.d("DMMemoTools", String.format("UPDATE \"%s\" SET checkStatus = %d WHERE memoId = %d;",
-                    addSlashes(mCategoryName), (checkStatus ? 1 : 0), mMemoId));
+                    addSlashes(mCategoryName), (checkStatus ? 1 : 0), arabicToDecimal(mMemoId)));
             database.close();
             databaseHelper.close();
         } catch (Exception e) {
