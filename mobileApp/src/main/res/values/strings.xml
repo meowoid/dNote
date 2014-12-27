@@ -79,6 +79,9 @@
     <string name="st_enter_save">Enter key to save</string>
     <string name="st_enter_save_help_on">Pressing enter key will save your note but multi line note can\'t be added.</string>
     <string name="st_enter_save_help_off">You should touch \'Add\' button to save your note but multi line note can be added.</string>
+    <string name="st_use_checklist">Checklist</string>
+    <string name="st_use_checklist_help_on">Checkbox for each note will shown in the left of the note.</string>
+    <string name="st_use_checklist_help_off">Checkbox for each note will not shown, but checked note list will remain.</string>
 
     <string name="new_note">New note</string>
     <string name="new_note_category_not_defined">Saving category not defined!</string>

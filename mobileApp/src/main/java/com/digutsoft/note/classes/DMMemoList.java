@@ -1,6 +1,8 @@
 package com.digutsoft.note.classes;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,9 +38,20 @@ public class DMMemoList {
         Context mContext;
         ArrayList<DMMemoList> alMemoList;
 
+        SharedPreferences sharedPreferences;
+        boolean isCheckboxEnabled;
+
+        final int _8dp;
+
         public DMMemoListAdapter(Context mContext, ArrayList<DMMemoList> alMemoList) {
             this.mContext = mContext;
             this.alMemoList = alMemoList;
+
+            sharedPreferences = PreferenceManager.getDefaultSharedPreferences(mContext);
+            isCheckboxEnabled = sharedPreferences.getBoolean("st_use_checklist", false);
+
+            final float scale = mContext.getResources().getDisplayMetrics().density;
+            _8dp = (int) (8 * scale + 0.5f);
         }
 
         @Override
@@ -75,13 +88,18 @@ public class DMMemoList {
             DMMemoList list = alMemoList.get(position);
 
             if (list != null) {
-                memoListViewHolder.checkBox.setChecked(alMemoList.get(position).mCheckedStatus);
-                memoListViewHolder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                    @Override
-                    public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                        DMMemoTools.checkMemo(mContext, DMMemoView.mCategoryName, DMMemoView.getMemoId(position), b);
-                    }
-                });
+                if (isCheckboxEnabled) {
+                    memoListViewHolder.checkBox.setChecked(alMemoList.get(position).mCheckedStatus);
+                    memoListViewHolder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                        @Override
+                        public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                            DMMemoTools.checkMemo(mContext, DMMemoView.mCategoryName, DMMemoView.getMemoId(position), b);
+                        }
+                    });
+                } else {
+                    memoListViewHolder.checkBox.setVisibility(View.GONE);
+                    memoListViewHolder.textView.setPadding(_8dp, 0, _8dp, 0);
+                }
                 memoListViewHolder.textView.setText(alMemoList.get(position).mMemoTitle);
             }
 

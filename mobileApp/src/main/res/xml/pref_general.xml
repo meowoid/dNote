@@ -9,6 +9,13 @@
             android:summaryOff="@string/st_enter_save_help_off"
             android:defaultValue="false" />
 
+        <CheckBoxPreference
+            android:key="st_use_checklist"
+            android:title="@string/st_use_checklist"
+            android:summaryOn="@string/st_use_checklist_help_on"
+            android:summaryOff="@string/st_use_checklist_help_off"
+            android:defaultValue="false" />
+
     </PreferenceCategory>
 
 </PreferenceScreen>
