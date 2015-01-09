@@ -2,9 +2,5 @@
 <resources>
 
     <string name="app_name">dNote</string>
-    <string name="hello_round">Hello Round World!</string>
-    <string name="hello_square">Hello Square World!</string>
-    <string name="title_activity_my">MyActivity</string>
-    <string name="title_activity_dmwear_main">DMWearMain</string>
 
 </resources>
