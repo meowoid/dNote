@@ -79,6 +79,9 @@
     <string name="st_enter_save">엔터키로 저장</string>
     <string name="st_enter_save_help_on">엔터키를 누르면 메모가 저장되지만 두 줄 이상의 메모는 작성할 수 없습니다.</string>
     <string name="st_enter_save_help_off">메모를 저장하려면 \'저장\' 버튼을 눌러야 하지만 두 줄 이상의 메모를 작성할 수 있습니다.</string>
+    <string name="st_use_checklist">체크 목록</string>
+    <string name="st_use_checklist_help_on">메모 왼쪽에 체크박스가 나타납니다.</string>
+    <string name="st_use_checklist_help_off">체크박스가 나타나지 않지만, 이전에 체크된 데이터는 유지됩니다.</string>
 
     <string name="new_note">새 메모</string>
     <string name="new_note_category_not_defined">메모를 저장할 카테고리가 지정되지 않았습니다!</string>
